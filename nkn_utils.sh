@@ -38,3 +38,13 @@ function getVersion() {
         echo "$(printf "%-15s: " ${ip}; echo $(_httpjson_API $ip getversion|jq .result))" &
     done
 }
+
+function nbr_curr_hash() {
+    for me in "$@"; do
+        printf "%-16s: %s\n" ${me} $(nknc --ip ${me} info --latestblockhash | jq .result)
+        nknc --ip ${me} info --neighbor | node_neighbor_ip | while read ip; do
+            printf "%-16s: %s\n" ${ip} $(nknc --ip $ip info --latestblockhash | jq .result) &
+        done
+	wait
+    done
+}
