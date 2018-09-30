@@ -4,7 +4,7 @@
 function remote_exec () {
     for ip in $(awk '{print $2}' ${1})
     do
-        ssh -o StrictHostKeyChecking=no ${2}@${ip} 'echo "$(printf "\n### %s ###\n" $(hostname); '$3')"' &
+	    ssh -o StrictHostKeyChecking=no ${2}@${ip} 'echo "$(printf "\n### %s ### %s ###\n%s" $(hostname) '$ip' "$('$3')")"' &
     done
     wait
 }

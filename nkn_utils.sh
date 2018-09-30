@@ -7,11 +7,11 @@ function node_neighbor_ip() {
 
 ### Chord
 function chord_success_ip() {
-    cat $@ | jq '.result.Vnodes[].Successors[](.Host,.Id)' | sed 'N;s/\n/\t/g'
+    cat $@ | jq '.result.Vnodes[].Successors[]|(.Host,.Id)' | sed 'N;s/\n/\t/g'
 }
 
 function chord_finger_ip() {
-    cat $@ | jq '.result.Vnodes[].Finger[](.Host,.Id)'| sed 'N;s/\n/\t/g' | grep -v null
+    cat $@ | jq '.result.Vnodes[].Finger[]|(.Host,.Id)'| sed 'N;s/\n/\t/g' | grep -v null
 }
 
 function _httpjson_API() {
