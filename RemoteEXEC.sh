@@ -10,7 +10,7 @@ function remote_exec () {
 }
 
 ### Example
-#remote_exec ~/cluster2.lst admin "cd ~/nknorg/src/github.com/nknorg/nkn/ && git pull"
-#remote_exec ~/cluster2.lst admin 'export PATH=/usr/lib/go-1.10/bin:$PATH && export GOPATH=$HOME/nknorg && make -C ~/nknorg/src/github.com/nknorg/nkn/ all'
-#remote_exec ~/cluster2.lst admin "cd ~/nknorg/src/github.com/nknorg/nkn/ && ./test/create_testbed.sh 2"
-#remote_exec ~/cluster2.lst admin "cd ~/nknorg/src/github.com/nknorg/nkn/ && ./test/launch_node.sh ./testbed/node_0001 join"
+#remote_exec ~/cluster2.lst admin "cd ${NKN_HOME} && git pull"
+#remote_exec ~/cluster2.lst admin 'export PATH=/usr/lib/go-1.10/bin:$PATH && export GOPATH=$HOME/nknorg && make -C ${NKN_HOME} all'
+#remote_exec ~/cluster2.lst admin "cd ${NKN_HOME} && ./test/create_testbed.sh 2"
+#remote_exec ~/cluster2.lst admin "cd ${NKN_HOME} && ./test/launch_node.sh ./testbed/node_0001 join"
