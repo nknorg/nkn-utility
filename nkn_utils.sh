@@ -2,7 +2,7 @@
 
 ### Node
 function node_neighbor_ip() {
-    cat $@ | jq '.result[].IpAddr[12:][]'|sed 'N;N;N;s/\n/./g'
+    cat $@ | jq '(.result[].addr[6:] / ":")[0]'
 }
 
 ### Chord
@@ -41,9 +41,9 @@ function getVersion() {
 
 function nbr_curr_hash() {
     for me in "$@"; do
-        printf "%-16s: %s\n" ${me} $(nknc --ip ${me} info --latestblockhash | jq .result)
-        nknc --ip ${me} info --neighbor | node_neighbor_ip | while read ip; do
-            printf "%-16s: %s\n" ${ip} $(nknc --ip $ip info --latestblockhash | jq .result) &
+        printf "%-16s: %s\n" ${me} "$(echo $(nknc --ip ${me} info --latestblockhash | jq .result))"
+        nknc --ip ${me} info --neighbor | node_neighbor_ip |sed 's/"//g' | while read ip; do
+            printf "%-16s: %s\n" ${ip} "$(echo $(nknc --ip $ip info --latestblockhash | jq .result))" &
         done
 	wait
     done
