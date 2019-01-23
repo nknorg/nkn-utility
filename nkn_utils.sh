@@ -15,14 +15,16 @@ function chord_finger_ip() {
 }
 
 function _httpjson_API() {
-    echo ${1//:/ } | read ip port
+    read ip port<<EOF
+${1//:/ }
+EOF
     [ -z "$port" ] && port=30003
     curl -s -H "Content-Type:application/json" -X POST "http://${ip}:${port}" -d '
         {
         "jsonrpc": "3.0",
         "id": "1",
         "method": "'$2'",
-        "params": {}
+        "params": {'${3}'}
         }
     '
 }
@@ -46,5 +48,11 @@ function nbr_curr_hash() {
             printf "%-16s: %s\n" ${ip} "$(echo $(nknc --ip $ip info --latestblockhash | jq .result))" &
         done
 	wait
+    done
+}
+
+function getBlockHash() {
+    cat $1 | awk '{print $2}' | while read ip; do
+        echo "$(printf "%-15s: " ${ip}; echo $(_httpjson_API $ip getblock \"height\":$2 | jq .result.hash))" &
     done
 }
