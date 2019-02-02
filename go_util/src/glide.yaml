@@ -1,0 +1,11 @@
+package: .
+import:
+- package: github.com/nknorg/nnet
+  version: df780857b32a5b1451507435df8471622d69afbe
+- package: github.com/nknorg/nkn
+  version: ~0.7.3-alpha
+  subpackages:
+  - common
+  - core/contract
+  - crypto
+  - por
