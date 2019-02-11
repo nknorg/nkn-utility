@@ -45,7 +45,7 @@ function nbr_curr_hash() {
     for me in "$@"; do
         printf "%-16s: %s\n" ${me} "$(_httpjson_API ${me} getlatestblockhash | jq -c .result)"
         _httpjson_API ${me} getneighbor | node_neighbor_ip |sed 's/"//g' | while read ip; do
-            printf "%-16s: %s\n" ${ip} "$(_httpjson_API ${me} getlatestblockhash | jq -c .result)" &
+            printf "%-16s: %s\n" ${ip} "$(_httpjson_API ${ip} getlatestblockhash | jq -c .result)" &
         done
 	wait
     done
